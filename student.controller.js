@@ -1,7 +1,7 @@
 const {Student} = require('./student')
 
 class studentController{
-create = async (req, res) => {
+create = async (req, res) => {    
     try {
         let student = new Student(req.body)
         await student.save()
@@ -20,7 +20,7 @@ create = async (req, res) => {
     } 
 };
 getOne = async (req, res) => {
-    const student = await  Student.findById({id: req.params.id})
+    const student = await  Student.findById(req.params.id)
     if (!student){
         return res.status(404).send({
             success: false,
@@ -32,6 +32,22 @@ getOne = async (req, res) => {
         success: true,
         message: 'student found',
         data: student
+    })
+
+};
+getAll = async (req, res) => {
+    const students = await  Student.find()
+    if (!students){
+        return res.status(404).send({
+            success: false,
+            message: 'student not found'
+        })
+
+    };
+    return res.status(200).send({
+        success: true,
+        message: 'student found',
+        data: students
     })
 
 };
