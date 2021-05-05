@@ -54,19 +54,19 @@ getAll = async (req, res) => {
 update = async (req, res) => {
     const student = await Student.findById(req.params.id)
     
-    student.name = req.body.name,
-    student.department = req.body.department,
-    student.level = req.body.level
+    student.name = req.body.name;
+    student.department = req.body.department ? req.body.department : student.department;
+    student.level = req.body.level ? req.body.level : student.level;
 
     await student.save()
     res.status(200).send({
         success: true,
-        message: 'student crearted',
+        message: 'student update',
         data: student
     });
 };
 delete = async (req, res) => {
-    const student = Student.findByIdAndRemove(req.params.id)
+    const student = await Student.findByIdAndRemove(req.params.id)
     await student.delete()
     res.status(201).send({
         success: true,
