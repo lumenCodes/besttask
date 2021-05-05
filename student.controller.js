@@ -1,10 +1,10 @@
-const Student = require('./student')
+const {Student} = require('./student')
 
 class studentController{
 create = async (req, res) => {
     try {
-            let student = new Student
-        // await student.save()
+        let student = new Student(req.body)
+        await student.save()
 
         res.status(200).send({
             success: true,
